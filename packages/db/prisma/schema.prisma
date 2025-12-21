@@ -5,8 +5,7 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -27,6 +26,7 @@ model Courses{
   title String @unique 
   slug String @unique
   purchased Purchases[]
+  calendarNotionId String
 }
 
 model Purchases{
@@ -35,5 +35,5 @@ model Purchases{
   courseId String 
   user User @relation(fields: [userId], references: [id])
   course Courses @relation(fields: [courseId], references: [id])
-
+  @@unique([userId,courseId])
 }
