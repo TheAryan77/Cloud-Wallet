@@ -1,5 +1,5 @@
 import {Router} from "express"
-import authmiddleware from "../middlewares/authmiddleware"
+import {authmiddleware} from "../middlewares/authmiddleware"
 import { client } from "../../../packages/db"
 
 const  router = Router();    

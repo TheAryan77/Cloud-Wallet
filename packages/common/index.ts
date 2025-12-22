@@ -10,3 +10,10 @@ export const signinschema = z.object({
     email : z.string(),
     password : z.string()
 })
+
+export const CreateUserSchema = z.object({
+    phone:z.string(),
+    email : z.string(),
+    name : z.string(),
+    password : z.string(), 
+})  

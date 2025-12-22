@@ -6,6 +6,9 @@
   "devDependencies": {
     "@types/bun": "latest"
   },
+  "exports": {
+    "./solana":"./solana.ts"
+  },
   "peerDependencies": {
     "typescript": "^5"
   },
