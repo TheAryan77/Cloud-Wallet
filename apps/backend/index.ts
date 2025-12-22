@@ -1,5 +1,6 @@
 import express from "express"
 import cors from "cors";
+import "dotenv/config"
 import userrouter from "./routes/user"
 import calenderrouter from "./routes/calender"
 
@@ -12,7 +13,7 @@ const app = express();
 app.use(express.json())
 app.use(cors())
 app.use("/auth",userrouter)
-app.use("/calender",calenderrouter)
+app.use("/course",calenderrouter)
 
 
 app.get("/",(req,res)=>{

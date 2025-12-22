@@ -1,31 +1,39 @@
 import type { NextFunction, Request, Response } from "express";
 import  jwt, { type JwtPayload } from "jsonwebtoken"
+import "dotenv/config"
 
 function authmiddleware ( req:Request,res:Response,next:NextFunction){
     const header = req.headers.authorization
     const token =   header?.split(" ")?.[1] as string;
 
     if(!token){
-        return res.json({
+        return res.status(401).json({
             message:"Missing token"
         })
     }
 
     try{
-        const {userid} = jwt.verify(token,process.env.JWT_SECRET as string) as JwtPayload;
-        if(userid){
-            req.body.userid = userid
+        const decoded = jwt.verify(token,process.env.JWT_SECRET as string) as JwtPayload;
+        if(decoded && decoded.userid){
+            // Use req.body for POST/PUT, initialize if undefined for GET
+            if (!req.body) {
+                req.body = {};
+            }
+            req.body.userid = decoded.userid
+            next()
+        } else {
+            return res.status(401).json({
+                message:"Invalid token payload"
+            })
         }
     }
     catch(e){
-        return res.json({
-            message:"Invalid token"
+        console.error("Token verification error:", e);
+        return res.status(401).json({
+            message:"Invalid token",
+            error: e instanceof Error ? e.message : "Unknown error"
         })
     }
-
-    
-
-    next()
 }
 
 export default authmiddleware
