@@ -17,3 +17,9 @@ export const CreateUserSchema = z.object({
     name : z.string(),
     password : z.string(), 
 })  
+
+export const SendSchema = z.object({
+    to:z.string(),
+    amount:z.string(),
+    message:z.string().optional()
+})
